@@ -1,0 +1,7 @@
+<mat-list>
+  <mat-list-item *ngFor="let band of data.results">
+    <div mat-line> {{band.artistName}}</div>
+    <div mat-line> Genre: <small>{{band.primaryGenreName}}</small> </div>
+    <button mat-stroked-button color="primary" (click)="loadAlbumsById(band.amgArtistId)">see albums</button>
+  </mat-list-item>
+</mat-list>

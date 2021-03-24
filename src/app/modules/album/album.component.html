@@ -1,0 +1,18 @@
+<div class="flex-container">
+  <div *ngFor="let item of albums.results; let i=index" class="flex-item">
+    <mat-card *ngIf="i != 0">
+      <mat-card-header>
+        <mat-card-title>{{item.collectionName}}</mat-card-title>
+        <mat-card-subtitle>{{item.artistName}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="{{item.artworkUrl100}}" alt="{{item.collectionName}}">
+      <mat-card-content>
+        Release date: {{item.releaseDate | date: shortDate}}
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button (click)="loadTracksByAlbumId(item.amgArtistId, item.collectionName)">Tracks</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+</div>

@@ -1,0 +1,35 @@
+<mat-toolbar color="primary">
+  Music Search
+</mat-toolbar>
+<br>
+<mat-form-field>
+  <mat-label>Search by band, Ex: Venom, Megadeath, Sepultura</mat-label>
+  <input matInput type="text" [(ngModel)]="name">
+</mat-form-field>
+<button mat-stroked-button color="primary" (click)="searchByName(name)" class="btn btn-primary mb-2">Search</button>
+
+<div>
+  <mat-tab-group #changeEvent (selectedIndexChange)="tabChanged($event)" [(selectedIndex)]="currentTabIndex"
+    style="height: 400px; overflow: hidden">
+
+    <mat-tab label="Band">
+      <app-loader [isLoading]="isLoadingInProgress$ | async"></app-loader>
+      <div *ngIf="bands$ | async as bands">
+        <app-band [data]="bands" (loadAlbums)="getAlbums($event)"></app-band>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Albums">
+      <app-loader [isLoading]="isLoadingInProgress$ | async"></app-loader>
+      <div *ngIf="albums$ | async as albums">
+        <app-album [albums]="albums" (loadTracks)="getTracks($event)"></app-album>
+      </div>
+    </mat-tab>
+    <mat-tab label="Tracks">
+      <app-loader [isLoading]="isLoadingInProgress$ | async"></app-loader>
+      <div *ngIf="tracks$ | async as tracks">
+        <app-track [tracks]="tracks" [album]="album"></app-track>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
