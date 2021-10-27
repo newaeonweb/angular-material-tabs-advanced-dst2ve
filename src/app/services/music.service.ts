@@ -1,67 +1,67 @@
 import {
   HttpClient,
   HttpErrorResponse,
-  HttpParams
-} from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable, throwError } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+  HttpParams,
+} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
-export interface IBand {
+export interface Band {
   id?: number;
   name?: string;
   albums?: string[];
 }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class MusicService {
   constructor(private http: HttpClient) {}
 
-  getAlbumsBandById(amgArtistId: number): Observable<IBand[]> {
+  getAlbumsBandById(amgArtistId: number): Observable<Band[]> {
     const params = new HttpParams()
-      .set("amgArtistId", amgArtistId.toString())
-      .set("entity", "album");
+      .set('amgArtistId', amgArtistId.toString())
+      .set('entity', 'album');
 
     return this.http
-      .get<IBand[]>(`https://itunes.apple.com/lookup`, { params })
-      .pipe(catchError(error => this.handleError(error)));
+      .get<Band[]>(`https://itunes.apple.com/lookup`, { params })
+      .pipe(catchError((error) => this.handleError(error)));
   }
 
-  getSongsByBandId(amgArtistId: number): Observable<IBand[]> {
+  getSongsByBandId(amgArtistId: number): Observable<Band[]> {
     const params = new HttpParams()
-      .set("amgArtistId", amgArtistId.toString())
-      .set("entity", "song");
+      .set('amgArtistId', amgArtistId.toString())
+      .set('entity', 'song');
 
     return this.http
-      .get<IBand[]>(`https://itunes.apple.com/lookup`, { params })
-      .pipe(catchError(error => this.handleError(error)));
+      .get<Band[]>(`https://itunes.apple.com/lookup`, { params })
+      .pipe(catchError((error) => this.handleError(error)));
   }
 
   getBandByName(
     name: string,
-    entity = "allArtist",
-    attribute = "allArtistTerm",
+    entity = 'allArtist',
+    attribute = 'allArtistTerm',
     limit = 20,
-    media = "music"
-  ): Observable<IBand[]> {
+    media = 'music'
+  ): Observable<Band[]> {
     return this.http
-      .get<IBand[]>(
+      .get<Band[]>(
         `https://itunes.apple.com/search?term=${name}&entity=${entity}&attribute=${attribute}&limit=${limit}`
       )
-      .pipe(catchError(error => this.handleError(error)));
+      .pipe(catchError((error) => this.handleError(error)));
   }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
-      console.error("An error occurred:", error.error.message);
+      console.error('An error occurred:', error.error.message);
     } else {
-      console.error("An error occurred:", error.message);
+      console.error('An error occurred:', error.message);
       return throwError(error);
     }
     return throwError(
-      "Ohps something wrong happen here; please try again later."
+      'Ohps something wrong happen here; please try again later.'
     );
   }
 }

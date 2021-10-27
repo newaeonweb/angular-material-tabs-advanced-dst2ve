@@ -1,20 +1,20 @@
-import { EventEmitter, Input } from "@angular/core";
-import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
-import { finalize } from "rxjs/operators";
-import { IBand, MusicService } from "./services/music.service";
+import { EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { Band, MusicService } from './services/music.service';
 
 @Component({
-  selector: "my-app",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
   @Input() loadAlbums = new EventEmitter();
   currentTabIndex = 0;
-  bands$: Observable<any>;
-  albums$: Observable<any>;
-  tracks$: Observable<any>;
+  bands$: Observable<Band[]>;
+  albums$: Observable<any>; // interface not implemented yet
+  tracks$: Observable<any>; // interface not implemented yet
   isLoadingInProgress$ = new BehaviorSubject<boolean>(false);
   album: string;
   name: string;
@@ -46,7 +46,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   getTracks(album) {
-
     this.album = album.collectionName;
 
     this.isLoadingInProgress$.next(true);
@@ -57,6 +56,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   tabChanged(tabChangeEvent: number) {
-    console.log("tab selected: " + tabChangeEvent);
+    console.log('tab selected: ' + tabChangeEvent);
   }
 }
